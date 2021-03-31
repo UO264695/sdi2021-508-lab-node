@@ -15,6 +15,8 @@ app.set('port', 8081);
 require("./routes/rusuarios.js")(app, swig); // (app, param1, param2, etc.)
 require("./routes/rcanciones.js")(app, swig); // (app, param1, param2, etc.)
 
+require("./routes/rautores.js")(app, swig);
+
 // Lanzar el servidor
 app.listen(app.get('port'), function(){
     console.log('Servidor activado')

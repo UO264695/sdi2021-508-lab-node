@@ -15,6 +15,18 @@
             <button type="button" class="btn btn-primary pull-right">{{ cancion.precio }} €</button>
             <!-- Cambiar el precio por "reproducir" si ya está comprada -->
         </div>
+        <div>
+            <h3>Comentarios</h3>
+            <form class="form-horizontal" method="post" action="/comentarios/{{ cancion._id.toString() }}" encType="multipart/form-data">
+                <input type="text" class="form-control" name="texto"
+                       placeholder="Agregar un comentario..." required="true"/>
+                <button type="submit" class="btn btn-primary">Comentar</button>
+            </form>
+            {% for comentario in comentarios %}
+                <h4>{{ comentario.autor }}</h4>
+                <p>{{ comentario.texto }}</p>
+            {% endfor %}
+        </div>
     </div>
 </div>
 

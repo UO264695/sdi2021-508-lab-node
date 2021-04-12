@@ -13,6 +13,11 @@ module.exports = function(app, swig, gestorBD) {
         res.send(respuesta);
     });
 
+    app.get('/desconectarse', function (req, res) {
+        req.session.usuario = null;
+        res.send("Usuario desconectado");
+    });
+
     app.post("/identificarse", function(req, res) {
         let seguro = app.get("crypto").createHmac('sha256', app.get('clave'))
             .update(req.body.password).digest('hex');
@@ -23,18 +28,15 @@ module.exports = function(app, swig, gestorBD) {
         gestorBD.obtenerUsuarios(criterio, function(usuarios) {
             if (usuarios == null || usuarios.length == 0) {
                 req.session.usuario = null;
-                res.send("No identificado: ");
+                res.redirect("/identificarse" +
+                    "?mensaje=Email o password incorrecto"+
+                    "&tipoMensaje=alert-danger ");
             } else {
                 req.session.usuario = usuarios[0].email;
                 res.redirect("/publicaciones");
             }
         });
     });
-
-    app.get('/desconectarse', function (req, res) {
-        req.session.usuario = null;
-        res.send("Usuario desconectado");
-    })
 
     app.post('/usuario', function(req, res) {
         let seguro = app.get("crypto").createHmac('sha256', app.get('clave'))
@@ -47,9 +49,9 @@ module.exports = function(app, swig, gestorBD) {
 
         gestorBD.insertarUsuario(usuario, function (id) {
             if (id == null) {
-                res.send("Error al insertar el usuario");
+                res.redirect("/registrase?mensaje=Error al registrar usuario.");
             } else {
-                res.redirect('/identificarse');
+                res.redirect('/identificarse?mensaje=Nuevo usuario regostrado.');
             }
         });
     });

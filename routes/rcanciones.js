@@ -43,7 +43,6 @@ module.exports = function(app, swig, gestorBD) {
                                 cancion : canciones[0],
                                 comentarios : comentarios
                             });
-                        //res.send(comentarios);
                         res.send(respuesta);
                     }
                 });

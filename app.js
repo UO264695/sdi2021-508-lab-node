@@ -5,6 +5,9 @@ let app = express();
 let jwt = require('jsonwebtoken');
 app.set('jwt',jwt);
 
+let rest = require('request');
+app.set('rest',rest);
+
 let fs = require('fs');
 let https = require('https');
 
